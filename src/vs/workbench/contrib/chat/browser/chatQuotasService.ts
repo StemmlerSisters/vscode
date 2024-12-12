@@ -119,9 +119,9 @@ export class ChatQuotasService extends Disposable implements IChatQuotasService 
 				let message: string;
 				const { chatQuotaExceeded, completionsQuotaExceeded } = that.quotas;
 				if (chatQuotaExceeded && !completionsQuotaExceeded) {
-					message = localize('chatQuotaExceeded', "You've run out of free chat messages. You still have free code completions available in the Copilot Free plan. These limits will reset on {0}", dateFormatter.format(that.quotas.quotaResetDate));
+					message = localize('chatQuotaExceeded', "You've run out of free chat messages. You still have free code completions available in the Copilot Free plan. These limits will reset on {0}.", dateFormatter.format(that.quotas.quotaResetDate));
 				} else if (completionsQuotaExceeded && !chatQuotaExceeded) {
-					message = localize('completionsQuotaExceeded', "You've run out of free code completions. You still have free chat messages available in the Copilot Free plan. These limits will reset on {0}", dateFormatter.format(that.quotas.quotaResetDate));
+					message = localize('completionsQuotaExceeded', "You've run out of free code completions. You still have free chat messages available in the Copilot Free plan. These limits will reset on {0}.", dateFormatter.format(that.quotas.quotaResetDate));
 				} else {
 					message = localize('chatAndCompletionsQuotaExceeded', "You've reached the limit of the Copilot Free plan. These limits will reset on {0}.", dateFormatter.format(that.quotas.quotaResetDate));
 				}
@@ -261,7 +261,11 @@ export class ChatQuotasStatusBarEntry extends Disposable implements IWorkbenchCo
 				compact: isCopilotStatusVisible
 			}));
 
-			this.entry.add(this.statusbarService.overrideEntry(ChatQuotasStatusBarEntry.COPILOT_STATUS_ID, { kind: 'prominent' }));
+			this.entry.add(this.statusbarService.overrideEntry(ChatQuotasStatusBarEntry.COPILOT_STATUS_ID, {
+				text: '$(copilot-warning)',
+				ariaLabel: text,
+				kind: 'prominent'
+			}));
 		}
 	}
 }
